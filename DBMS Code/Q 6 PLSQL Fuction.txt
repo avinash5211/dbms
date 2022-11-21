@@ -1,0 +1,43 @@
+create table stud_marks(rollin int primary key ,name varchar(20),total_marks INT);
+create table result(roll INT,name varchar(20),class varchar(20));
+
+insert into stud_marks values(101,"Prathmesh",1220);
+insert into stud_marks values(102,"Avinash",1500);
+insert into stud_marks values(103,"Sanika",1600);
+
+delimiter //
+create procedure findgrade(marks int,out classes varchar(30))
+begin
+if marks>989 and marks<1500 then
+set classes="Distinction";
+elseif marks>900 and marks<=989 then
+set classes="first class";
+elseif marks>800 and marks<900 then
+set classes="second class";
+elseif marks<800 then
+set classes="fail";
+end if;
+
+end;
+//
+
+-------------
+
+create function insertval(roll int) returns int deterministic
+begin
+
+declare fmarks int;
+declare fgrade varchar(10);
+declare fname varchar(10);
+
+select name into fname from stud_marks where stud_marks.rollin=roll ;
+select total_marks into fmarks from stud_marks where stud_marks.rollin=roll ;
+
+call findgrade(fmarks,@fgrade);
+insert into result values(roll,fname,@fgrade);
+return roll;
+end//
+
+
+select insertval(101)//
+select * from result//

@@ -1,0 +1,48 @@
+-- Prathmesh Papal
+
+create table borrower(roll INT PRIMARY KEY, name VARCHAR(20),dateofissue date,nameofbook VARCHAR(20),status VARCHAR(20));
+
+INSERT INTO borrower value(1,"Prathmesh","20221110","Harry Potter","return");
+INSERT INTO borrower value(2,"Phule","20221115","CNS","taken");
+INSERT INTO borrower value(3,"Avinash","20221116","SPOS","taken");
+INSERT INTO borrower value(4,"Priti","20221119","TOC","return");
+
+create table library_audit(rollint INT,name VARCHAR(20),dateofissue DATE,nameofbook VARCHAR(20),status varchar(20),ts timestamp);
+
+SELECT * from borrower;
+
+delimiter //
+create trigger after_insert AFTER INSERT ON borrower FOR EACH ROW
+BEGIN
+insert into library_audit values(new.roll,new.name,new.dateofissue,new.nameofbook,new.status,current_timestamp());
+end;
+//
+insert into borrower values(5,"Sonam","20221119","SPM","taken")//
+select * from borrower//
+select * from library_audit//
+
+
+create trigger after_delete
+AFTER
+DELETE
+ON borrower
+FOR EACH ROW
+BEGIN
+insert into library_audit values(old.roll,old.name,old.dateofissue,old.nameofbook,old.status,current_timestamp());
+end;
+//
+delete from borrower where roll=4//
+select * from borrower//
+select * from library_audit//
+
+
+
+create trigger after_update after UPDATE ON borrower for each row
+begin
+insert into library_audit values(old.roll,old.name,old.dateofissue,old.nameofbook,old.status,current_timestamp());
+end;
+//
+update borrower SET status="return" where borrower.roll=3//
+select * from borrower//
+select * from library_audit//
+

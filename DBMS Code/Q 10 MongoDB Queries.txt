@@ -1,0 +1,23 @@
+Prathmesh Papal
+
+
+use practice
+
+db.createCollection("student")
+
+db.student.insert({"Name":"Prathmesh","Class":"TE","address":"Saswad","age":21,"fees":50000})
+db.student.insert({"Name":"Phule","Class":"TE","address":"Pargaon","age":21,"fees":55000})
+db.student.insert({"Name":"Avinash","Class":"TE","address":"Kale","age":21,"fees":12000})
+db.student.insert({"Name":"Aditya","Class":"TE","address":"Kondhawa","age":21,"fees":8000})
+db.student.insert({"Name":"Vijay","Class":"TE","address":"Pune","age":21,"fees":80000})
+db.student.insert({"Name":"Sumit","Class":"TE","address":"Pimpri","age":21,"fees":120000})
+
+
+db.student.find().pretty()
+
+db.student.update({"Name":"Sumit"},{$set:{"age":25}})
+db.student.find({"Name":"Sumit"})
+
+db.student.find()
+db.student.deleteOne({"Name":"Vijay"})
+db.student.find()

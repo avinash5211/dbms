@@ -1,0 +1,17 @@
+ER Diagram:-             (kite)    (double square)       (kite)        (square)
+                  
+              student----enrols-----course offering------teaches-------instructor
+
+
+
+                                    (double line to connect)
+
+
+                                     is offered(double kite)
+
+
+
+
+                              prerequisite
+         (single kite)requires==========course(square entity)
+                                maincourse

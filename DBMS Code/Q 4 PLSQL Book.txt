@@ -1,0 +1,33 @@
+
+
+create table borrower(roll_in INT PRIMARY KEY,name VARCHAR(20),dateofissue DATE,nameofbook VARCHAR(20),status VARCHAR(15));
+CREATE TABLE fine(roll_no INT,date DATE,amt INT,FOREIGN KEY(roll_no) REFERENCES borrower(roll_in));
+
+INSERT INTO borrower values(1,"Prathmesh","20221109","DBMS","PEN");
+INSERT INTO borrower values(2,"Avinash","20221014","SPM","PEN");
+INSERT INTO borrower values(3,"Shruti","20221101","SPOS","PEN");
+
+delimiter //
+create procedure clacfine(in roll int)
+begin 
+declare fine1 int;
+declare noofdays int;
+declare issuedate date;
+declare exit handler for SQLEXCEPTION select "create table defination";
+select dateofissue into issuedate from borrower where roll_in=roll;
+select datediff(curdate(),issuedate) into noofdays;
+if noofdays>15 and noofdays<=30 then
+set fine1=noofdate*fine;
+insert into fine values(roll,curdate(),fine1);
+elseif noofdays>30 then
+set fine1=((noofdays-30)*50)+15*5;
+insert into fine values(roll,curdate(),fine1);
+else
+insert into fine values(roll,curdate(),0);
+end if;
+update borrower set status="return" where roll_in=roll;
+end //
+
+call clacfine(1)//
+call clacfine(2)//
+select * from fine//

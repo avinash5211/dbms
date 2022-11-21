@@ -1,0 +1,33 @@
+// Prathmesh Papal
+
+package JavaMongo;
+
+import java.net.UnknownHostException;
+
+import com.mongodb.*;
+
+public class JavaMongo1 {
+
+	public static void main(String[] args) {
+	
+		try {
+			MongoClient m=new MongoClient("localhost",27017);
+			System.out.println("successful");
+			DB db1= m.getDB("prath");
+			DBCollection coll=db1.createCollection("mongoconnector",null);
+			
+			BasicDBObject d1=new BasicDBObject("Name","Prathmesh").append("RollNo","27");
+			BasicDBObject d2=new BasicDBObject("Name","Avinash").append("RollNo","31");
+			
+			coll.insert(d1);
+			coll.insert(d2);
+			DBCursor cur=coll.find();
+			while(cur.hasNext()) {
+				System.out.println(cur.next());
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}

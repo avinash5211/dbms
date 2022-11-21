@@ -1,0 +1,18 @@
+ db.createCollection("student")
+
+db.student.insert({"stud_id":1,"stud_name":"Prathmesh","stud_marks":85})
+db.student.insert({"stud_id":1,"stud_name":"Prathmesh","stud_marks":75})
+ db.student.insert({"stud_id":2,"stud_name":"Avinash","stud_marks":70})
+db.student.insert({"stud_id":3,"stud_name":"Aditya","stud_marks":90})
+db.student.insert({"stud_id":3,"stud_name":"Aditya","stud_marks":74})
+db.student.insert({"stud_id":4,"stud_name":"Shruti","stud_marks":9})
+
+var mapfunction=function() { emit (this.stud_id,this.stud_marks)}
+
+var mapreduces=function(keys,value){ return Array.sum(value)}
+
+db.student.mapReduce(mapfunction,mapreduces,{"out":"new"})
+
+db.student.find()
+
+db.new.find()

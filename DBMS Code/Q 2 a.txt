@@ -1,0 +1,46 @@
+-- Prathmesh Papal
+
+create table salesman(salesman_id INT,name VARCHAR(20),city VARCHAR(10),commission INT);
+ALTER TABLE salesman ADD PRIMARY KEY (salesman_id);
+
+create table customer(customer_id INT PRIMARY KEY,customer_name VARCHAR(20),city VARCHAR(10), grades VARCHAR(5),salesman_id INT, FOREIGN KEY(salesman_id) REFERENCES salesman(salesman_id) ON DELETE SET NULL);
+
+create table orders(order_no INT, purchase_amt INT,order_date DATE,customer_id INT,salesman_id INT,FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE SET NULL,FOREIGN KEY (salesman_id) REFERENCES salesman(salesman_id));
+
+ALTER TABLE salesman ADD mobile_no BIGINT;
+
+insert into salesman values(1,"Prathmesh","Pune",2000,9898989999);
+insert into salesman values(2,"Avinash","Satara",3000,9888889999);
+insert into salesman values(3,"Aditya","Mumbai",4000 ,7777777999);
+
+insert into customer values(11,"Sayali","Pune","A",1);
+insert into customer values(12,"Akanksha","Satara","B",2);
+insert into customer values(13,"Sai","Mumbai","C",3);
+
+insert into orders values(111,1000,"20221117",11,1);
+insert into orders values(112,30000,"20221118",12,2);
+insert into orders values(113,50000,"20221119",13,3);
+
+select name,commission from salesman;
+
+select * from customer;
+alter table customer drop grades;
+select * from customer;
+
+alter table customer modify city CHAR(50);
+
+CREATE INDEX sale ON salesman(salesman_id);
+show index from salesman;
+
+update salesman set city="Paris" where salesman_id=1;
+
+create view v1 AS SELECT salesman.name,city from salesman where city="Paris";
+ select * from v1;
+
+update customer set grades=111 where customer_id=11;
+update customer set grades=222 where customer_id=12;
+update customer set grades=333 where customer_id=13;
+
+select city,MAX(grades) from customer group by city;
+
+select customer_id,MAX(purchase_amt) from orders group by customer_id;
